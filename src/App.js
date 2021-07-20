@@ -1,27 +1,63 @@
-// Hi!
 
-// We'll be creating a "Todo App", which is a well-known app type
-// for learning basic concepts of web/mobile frameworks.
+import { useState } from "react";
+import InputForAddToDo from "./components/InputToAddToDo";
+import DisplayList from "./components/DisplayList";
+import  todos from './utils'
 
-// We will go through slides and build the app together during the
-// React intro workshops at Selleo.
 
-const todos = [
-  { title: "Learn ReactJS", isDone: false, isArchived: false },
-  { title: "Attend ReactJS workshops", isDone: true, isArchived: false },
-  { title: "Learn Ruby on Rails", isDone: true, isArchived: false },
-  { title: "Attend Ruby on Rails workshops", isDone: true, isArchived: false },
-  {
-    title: "This one shouldn't be visible - archived",
-    isDone: true,
-    isArchived: true,
-  },
-];
 
 const App = () => {
+  const [ todosList, setTodos ] = useState(todos)
+  const [activityToDo, setActivityToDo] = useState('')
+
+
+  const archivedTodos = todosList.filter(todo => todo.isArchived)
+  const notArchivedTodos = todosList.filter(todo => !todo.isArchived)
+
+  const handleActivityToDoChange = (event)  => {
+    setActivityToDo(event.target.value)
+  }
+
+  const addToToDoList = (event) => {
+    event.preventDefault()
+    const thing = {
+      id: todosList.length,
+      title: activityToDo,
+      isDone: false,
+      isArchived: false
+    }
+
+    setTodos(todosList.concat(thing))
+    setActivityToDo('')
+  }
+
+
   return (
-    <div className="main__wrapper">
-      <h1 className="main__title">👋 Hello from Selleo</h1>
+    <div className="main__wrapper container">
+      <h1 className="main__title">TODO App</h1>
+      <i className="main__subtitle">Here you can store all the things you need to complete</i>
+      <hr/>
+      <InputForAddToDo
+        activityToDo={activityToDo}
+        handleActivityToDoChange={handleActivityToDoChange}
+        addToToDoList={addToToDoList}>
+      </InputForAddToDo>
+
+      <hr/>
+      <DisplayList 
+        todos={todosList}
+        filteredTodos={notArchivedTodos}
+        setTodos={setTodos} 
+        listTitle="ToDo List">
+      </DisplayList>
+
+      <hr/>
+      <DisplayList
+        todos={todosList} 
+        filteredTodos={archivedTodos}
+        setTodos={setTodos}
+        listTitle="Archived list">
+      </DisplayList>
     </div>
   );
 };

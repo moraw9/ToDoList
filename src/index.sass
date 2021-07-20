@@ -10,11 +10,13 @@ $gray-600: #4B5563
 $gray-700: #374151
 $gray-800: #1F2937
 $gray-900: #111827
+$border-list: #055b8e
+$to-do-list-header: #1d6e95c9
 
 $primary: #00add0
 $secondary: #ee5c1a
 
-body
+body 
   background-color: #e8e8e8
   margin: 0
   font-family: Inter
@@ -26,7 +28,74 @@ body
     display: flex
     align-items: center
     justify-content: center
+    flex-direction: column
 
   &__title
-    font-size: 1.6rem
-    color: $gray-900
+    font-weight: 900
+    background: #121FCF
+    background: -webkit-linear-gradient(to right, #121FCF 0%, #CF1512 100%)
+    background: -moz-linear-gradient(to right, #121FCF 0%, #CF1512 100%)
+    background: linear-gradient(to right, #121FCF 0%, #CF1512 100%)
+    -webkit-background-clip: text
+    -webkit-text-fill-color: transparent
+
+
+  &__subtitle
+    font-size: 1.4rem
+    color: $gray-800
+
+
+.form-input
+  margin-right: 5px
+  display: inline-block !important
+  width: auto !important
+  min-width: 300px
+
+.submit-btn
+  border: $border-list
+  background-color: blue
+
+
+.panel
+  border: 1px solid $border-list
+  border-radius: 4px
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05)
+  box-shadow: 0 1px 1px rgba(0,0,0,.05)
+
+  .panel-heading
+    border-top-left-radius: 3px
+    border-top-right-radius: 3px
+    padding: 10px 15px
+    font-size: 1.5rem
+    font-weight: 700
+    color: white
+    text-align: center
+    
+    &.--todo
+      background-color: $to-do-list-header
+    &.--archived
+      background-color: $gray-700
+
+
+.list-group-item
+  display: flex !important
+  align-items: center
+  justify-content: space-between
+
+  &.--done
+    background-color: $gray-300
+
+  .list-number 
+    color: white
+    display: flex
+    width: 2rem
+    height: 2rem
+    align-items: center
+    justify-content: center
+    margin-right: 1rem
+    border-radius: 50%
+    &.--todo
+      background-color: $to-do-list-header
+    &.--archived
+      background-color: $gray-700
+  
