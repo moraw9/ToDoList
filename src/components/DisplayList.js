@@ -1,20 +1,20 @@
 import React from 'react'
 import SingleToDo from './SingleToDo'
+import { useSelector, useDispatch } from "react-redux";
+import { setTodos, deleteThing as deleteThingRedux, archiveThing as archovedThingRedux, setThingDone as setThingDoneRedux}  from '../features/todoListMeanger/todoListMenagerSlice'
 
 const DisplayList =({todos,setTodos, listTitle, filteredTodos}) => {
 
+  const dispatch = useDispatch()
+
     const deleteThing = (thing) => () => {
-      const newTodoList = todos.filter(todo => todo.id !== thing.id)
-      console.log(newTodoList)
-      setTodos(newTodoList)
+      dispatch(deleteThingRedux(thing))
     }
     const archiveThing =(thing) => () => {
-      const newTodoList = todos.map( todo => todo.id !== thing.id ? todo : {...thing, isArchived: !thing.isArchived })
-      setTodos(newTodoList)
+      dispatch(archovedThingRedux(thing))
     }
     const setThingDone = (thing) => () => {
-      const newTodoList = todos.map( todo => todo.id !== thing.id ? todo : {...thing, isDone: !thing.isDone })
-      setTodos(newTodoList)
+      dispatch(setThingDoneRedux(thing))
     }
     return(
       <div className="panel">

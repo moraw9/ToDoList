@@ -1,14 +1,26 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputForAddToDo from "./components/InputToAddToDo";
 import DisplayList from "./components/DisplayList";
 import  todos from './utils'
+import { useSelector, useDispatch } from "react-redux";
+import { setTodos, deleteThing } from './features/todoListMeanger/todoListMenagerSlice'
 
 
 
 const App = () => {
-  const [ todosList, setTodos ] = useState(todos)
+
+  const todosList = useSelector((state) => state.menager.todosList)
+  const dispatch = useDispatch()
+
   const [activityToDo, setActivityToDo] = useState('')
+
+  useEffect(() => {
+    const localData = localStorage.getItem('todos')
+    setTodos(JSON.parse(localData) || todosList)
+  }, [])
+
+  useEffect(() => localStorage.setItem('todos', JSON.stringify(todosList)), [todosList])
 
 
   const archivedTodos = todosList.filter(todo => todo.isArchived)
@@ -27,7 +39,7 @@ const App = () => {
       isArchived: false
     }
 
-    setTodos(todosList.concat(thing))
+    dispatch(setTodos(todosList.concat(thing)))
     setActivityToDo('')
   }
 
